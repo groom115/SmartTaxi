@@ -2,7 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter, Outfit } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
-
+import Navbar from "@/Components/Navbar";
 const outfit = Outfit({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -16,10 +16,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
+    // <div className="flex items-center justify-center min-h-screen">
     <ClerkProvider>
       <html lang="en">
-        <body className={outfit.className}>{children}</body>
+        <body className={outfit.className}>
+          <Navbar />
+          {children}
+        </body>
       </html>
     </ClerkProvider>
+    // </div>
   );
 }
