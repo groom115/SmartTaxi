@@ -1,11 +1,16 @@
+import Booking from "@/Components/Booking/Booking";
+import Map from "@/Components/Map/Map";
 import Image from "next/image";
-import { UserButton } from "@clerk/nextjs";
 
 export default function Home() {
   return (
-    <div>
-      <h1>Welcome here</h1>
-      <UserButton afterSignOutUrl="/" />
+    <div className="grid grid-cols-1 md:grid-cols-3">
+      <div className="">
+        <Booking />
+      </div>
+      <div className="col-span-2 bg-slate-400">
+        <Map />
+      </div>
     </div>
   );
 }
