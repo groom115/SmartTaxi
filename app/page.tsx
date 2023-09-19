@@ -1,3 +1,5 @@
+"use client";
+
 import Booking from "@/Components/Booking/Booking";
 import Map from "@/Components/Map/Map";
 import Image from "next/image";
