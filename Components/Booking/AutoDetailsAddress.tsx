@@ -66,7 +66,7 @@ const AutoDetailsAddress = () => {
       lng: response.features[0].geometry.coordinates[0],
       lat: response.features[0].geometry.coordinates[1],
     });
-    // console.log(destCordinates);
+    console.log(destCordinates);
   };
 
   useEffect(() => {
