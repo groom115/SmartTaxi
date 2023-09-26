@@ -1,4 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { DestCordiContext } from "@/Context/DestCordiContext";
+import { SourceCordiContext } from "@/Context/SourceCordContext";
+import React, { useContext, useEffect, useState } from "react";
+
+const API_URL = "https://api.mapbox.com/search/searchbox/v1/retrieve/";
+const SESSION_TOKEN = "082bc384-5d2c-4b61-88aa-b655b0f0fff2";
 
 const AutoDetailsAddress = () => {
   const [source, setSource] = useState<any>("");
@@ -6,6 +11,10 @@ const AutoDetailsAddress = () => {
   const [addressList, setaddressList] = useState<any>([]);
   const [sourceChange, setSourceChange] = useState<boolean>(false);
   const [destChange, setDestChange] = useState<boolean>(false);
+  const { sourceCordinates, setSourceCordinates } =
+    useContext(SourceCordiContext);
+  const { destCordinates, setDestCordinates } = useContext(DestCordiContext);
+
   const getAddress = async () => {
     setaddressList([]);
     const query = sourceChange ? source : dest;
@@ -16,6 +25,48 @@ const AutoDetailsAddress = () => {
     });
     const result = await response.json();
     setaddressList(result);
+  };
+
+  const setSourceClick = async (item: any) => {
+    setSource(item.full_address);
+    setSourceChange(false);
+    setaddressList([]);
+    const res = await fetch(
+      API_URL +
+        item.mapbox_id +
+        "?session_token=" +
+        SESSION_TOKEN +
+        "&access_token=" +
+        process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN
+    );
+    const response = await res.json();
+
+    setSourceCordinates({
+      lng: response.features[0].geometry.coordinates[0],
+      lat: response.features[0].geometry.coordinates[1],
+    });
+    //console.log(sourceCordinates);
+  };
+
+  const setDestClick = async (item: any) => {
+    setDest(item.full_address);
+    setDestChange(false);
+    setaddressList([]);
+    const res = await fetch(
+      API_URL +
+        item.mapbox_id +
+        "?session_token=" +
+        SESSION_TOKEN +
+        "&access_token=" +
+        process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN
+    );
+    const response = await res.json();
+
+    setDestCordinates({
+      lng: response.features[0].geometry.coordinates[0],
+      lat: response.features[0].geometry.coordinates[1],
+    });
+    // console.log(destCordinates);
   };
 
   useEffect(() => {
@@ -51,9 +102,7 @@ const AutoDetailsAddress = () => {
                   key={index}
                   className="p-3 hover:bg-gray-100 cursor-pointer"
                   onClick={() => {
-                    setSource(item.full_address);
-                    setSourceChange(false);
-                    setaddressList([]);
+                    setSourceClick(item);
                   }}
                 >
                   {item.full_address}
@@ -86,9 +135,7 @@ const AutoDetailsAddress = () => {
                     key={index}
                     className="p-3 hover:bg-gray-100 cursor-pointer"
                     onClick={() => {
-                      setDest(item.full_address);
-                      setDestChange(false);
-                      setaddressList([]);
+                      setDestClick(item);
                     }}
                   >
                     {item.full_address}
