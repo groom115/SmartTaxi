@@ -5,6 +5,10 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import Markers from "./Markers";
 import { SourceCordiContext } from "@/Context/SourceCordContext";
 import { DestCordiContext } from "@/Context/DestCordiContext";
+import { DirectionDataContext } from "@/Context/DirectionDataContext";
+
+const BASE_URL = "https://api.mapbox.com/directions/v5/mapbox/driving/";
+const SESSION_TOKEN = "082bc384-5d2c-4b61-88aa-b655b0f0fff2";
 
 const MapBoxMap = () => {
   const { userLocation, setUserLocation } = useContext(UserLocationContex);
@@ -12,7 +16,7 @@ const MapBoxMap = () => {
     useContext(SourceCordiContext);
   const { destCordinates, setDestCordinates } = useContext(DestCordiContext);
   const mapRef = useRef<any>();
-
+  const { directionData, setDirectionData } = useContext(DirectionDataContext);
   useEffect(() => {
     if (sourceCordinates) {
       mapRef?.current?.flyTo({
@@ -29,7 +33,34 @@ const MapBoxMap = () => {
         duration: 2500,
       });
     }
+    console.log("ooppppa");
+    if (sourceCordinates && destCordinates) {
+      getDirectionRoute();
+    }
   }, [destCordinates]);
+
+  const getDirectionRoute = async () => {
+    const res = await fetch(
+      BASE_URL +
+        sourceCordinates.lng +
+        "," +
+        sourceCordinates.lat +
+        ";" +
+        destCordinates.lng +
+        "," +
+        destCordinates.lat +
+        "?overview=full&geometries=geojson&access_token=" +
+        process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const result = await res.json();
+    console.log(result);
+    setDirectionData(result);
+  };
 
   return (
     <div className="p-4">
