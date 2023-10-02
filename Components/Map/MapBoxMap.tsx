@@ -7,6 +7,7 @@ import { SourceCordiContext } from "@/Context/SourceCordContext";
 import { DestCordiContext } from "@/Context/DestCordiContext";
 import { DirectionDataContext } from "@/Context/DirectionDataContext";
 import MapBoxRoute from "./MapBoxRoute";
+import DistanceTime from "./DistanceTime";
 
 const BASE_URL = "https://api.mapbox.com/directions/v5/mapbox/driving/";
 const SESSION_TOKEN = "082bc384-5d2c-4b61-88aa-b655b0f0fff2";
@@ -34,7 +35,7 @@ const MapBoxMap = () => {
         duration: 2500,
       });
     }
-    console.log("ooppppa");
+
     if (sourceCordinates && destCordinates) {
       getDirectionRoute();
     }
@@ -87,6 +88,9 @@ const MapBoxMap = () => {
             ) : null}
           </Map>
         ) : null}
+      </div>
+      <div className="absolute bottom-[80px] z-20 right-[20px] hidden md:block">
+        <DistanceTime />
       </div>
     </div>
   );
