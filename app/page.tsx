@@ -2,6 +2,7 @@
 
 import Booking from "@/Components/Booking/Booking";
 import MapBoxMap from "@/Components/Map/MapBoxMap";
+import Navbar from "@/Components/Navbar";
 import { CarAmount } from "@/Context/CarAmount";
 import { DestCordiContext } from "@/Context/DestCordiContext";
 import { DirectionDataContext } from "@/Context/DirectionDataContext";
@@ -34,29 +35,32 @@ export default function Home() {
     getUserLocation();
   });
   return (
-    <UserLocationContex.Provider value={{ userLocation, setUserLocation }}>
-      <SourceCordiContext.Provider
-        value={{ sourceCordinates, setSourceCordinates }}
-      >
-        <DestCordiContext.Provider
-          value={{ destCordinates, setDestCordinates }}
+    <div>
+      <Navbar />
+      <UserLocationContex.Provider value={{ userLocation, setUserLocation }}>
+        <SourceCordiContext.Provider
+          value={{ sourceCordinates, setSourceCordinates }}
         >
-          <DirectionDataContext.Provider
-            value={{ directionData, setDirectionData }}
+          <DestCordiContext.Provider
+            value={{ destCordinates, setDestCordinates }}
           >
-            <CarAmount.Provider value={{ carAmount, setCarAmount }}>
-              <div className="grid grid-cols-1 md:grid-cols-3 ">
-                <div className="">
-                  <Booking />
+            <DirectionDataContext.Provider
+              value={{ directionData, setDirectionData }}
+            >
+              <CarAmount.Provider value={{ carAmount, setCarAmount }}>
+                <div className="grid grid-cols-1 md:grid-cols-3 ">
+                  <div className="">
+                    <Booking />
+                  </div>
+                  <div className="col-span-2">
+                    <MapBoxMap />
+                  </div>
                 </div>
-                <div className="col-span-2">
-                  <MapBoxMap />
-                </div>
-              </div>
-            </CarAmount.Provider>
-          </DirectionDataContext.Provider>
-        </DestCordiContext.Provider>
-      </SourceCordiContext.Provider>
-    </UserLocationContex.Provider>
+              </CarAmount.Provider>
+            </DirectionDataContext.Provider>
+          </DestCordiContext.Provider>
+        </SourceCordiContext.Provider>
+      </UserLocationContex.Provider>
+    </div>
   );
 }

@@ -11,6 +11,7 @@ const MapBoxRoute = (props: any) => {
           type: "LineString",
           coordinates: props.coordinates,
         },
+        properties: {},
       }}
     >
       <Layer
