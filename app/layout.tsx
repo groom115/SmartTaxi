@@ -4,6 +4,7 @@ import { Inter, Outfit } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import Navbar from "@/Components/Navbar";
 const outfit = Outfit({ subsets: ["latin"] });
+import { dark } from "@clerk/themes";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,7 +18,11 @@ export default function RootLayout({
 }) {
   return (
     // <div className="flex items-center justify-center min-h-screen">
-    <ClerkProvider>
+    <ClerkProvider
+      appearance={{
+        baseTheme: dark,
+      }}
+    >
       <html lang="en">
         <body className={outfit.className}>
           <Navbar />
