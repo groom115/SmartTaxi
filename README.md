@@ -9,7 +9,7 @@ Seamless Address Selection: Say goodbye to typing addresses! TaxiNow provides sm
 
 Location Tracking: Watch a dynamic marker smoothly glides from your source to your destination, providing you projected path , distance and estimated travel time between source and destination.
 
-Vehicle Selection: Tailor your ride to your needs by choosing from a variety of vehicle options, all at your fingertips. Whether you prefer a cozy sedan or a spacious SUV, TaxiNow has you covered.
+Vehicle Selection: Tailor your ride to your needs by choosing from a variety of vehicle options, all at your fingertips.
 
 Secure Booking: Confirm your booking with confidence. A single tap of the "Book" button takes you to the secure booking page, where your journey begins.
 
